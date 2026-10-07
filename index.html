@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Pujiverse Kitchen</title>
+  <meta name="description" content="Regional cuisines of the world, state by state — dishes, ingredients and step-by-step recipes.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="site-head">
+    <div class="wrap head-row">
+      <a href="/" class="brand" data-link>Pujiverse <span>Kitchen</span></a>
+      <form class="search" id="searchForm" role="search">
+        <label for="q" class="sr">Search dishes</label>
+        <input id="q" type="search" placeholder="Search dishes, e.g. biryani" autocomplete="off">
+      </form>
+    </div>
+  </header>
+
+  <main id="app" class="wrap" aria-live="polite">
+    <p class="loading">Loading recipes…</p>
+  </main>
+
+  <footer class="site-foot">
+    <div class="wrap">
+      <p>Recipes marked “AI-written” were drafted by AI and are being reviewed — adjust spice and salt to taste.</p>
+      <p>Photos from <a href="https://commons.wikimedia.org" target="_blank" rel="noopener">Wikimedia Commons</a> are credited on each dish page under their original licenses. Images labeled “AI-generated” are not photographs of the actual dish.</p>
+      <p>© <span id="yr"></span> Pujiverse</p>
+    </div>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>
