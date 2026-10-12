@@ -57,7 +57,7 @@ async function pageHome() {
   app.innerHTML = `<p class="eyebrow">India · state by state</p>
     <h1>What does each Indian state cook?</h1>
     <p class="lede">Browse India's regional cuisines, see every dish we've catalogued, and open a dish for its ingredients and step-by-step method.</p>
-    <div class="stats"><div><b>${data.cuisines.length}</b>regional cuisines</div><div><b>${data.dishes.length.toLocaleString()}</b>dishes</div><div><b>${recipes}</b>full recipes</div></div>
+    <div class="stats"><div><b>${data.cuisines.length}</b>regional cuisines</div><div><b>${data.dishes.length.toLocaleString()}</b>dishes</div><div><b>${recipes.toLocaleString()}</b>full recipes</div></div>
     ${cuisineGroups('india', data)}`;
 }
 

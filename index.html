@@ -14,7 +14,13 @@
 <body>
   <header class="site-head">
     <div class="wrap head-row">
-      <a href="#/" class="brand" data-link>Pujiverse <span>Kitchen</span></a>
+      <div class="head-left">
+        <a href="#/" class="brand" data-link>Pujiverse <span>Kitchen</span></a>
+        <nav class="head-nav" aria-label="Site">
+          <a href="#/" data-link>Recipes</a>
+          <a href="https://www.pujiverse.com/" class="hub">Pujiverse.com <span aria-hidden="true">↗</span></a>
+        </nav>
+      </div>
       <form class="search" id="searchForm" role="search">
         <label for="q" class="sr">Search dishes</label>
         <input id="q" type="search" placeholder="Search dishes, e.g. biryani" autocomplete="off">
@@ -30,6 +36,7 @@
     <div class="wrap">
       <p>Recipes marked “AI-written” were drafted by AI and are being reviewed — adjust spice and salt to taste.</p>
       <p>Photos from <a href="https://commons.wikimedia.org" target="_blank" rel="noopener">Wikimedia Commons</a> are credited on each dish page under their original licenses. Images labeled “AI-generated” are not photographs of the actual dish.</p>
+      <p class="foot-hub">Part of <a href="https://www.pujiverse.com/">Pujiverse</a>: explore more at <a href="https://www.pujiverse.com/">pujiverse.com</a></p>
       <p>© <span id="yr"></span> Pujiverse</p>
     </div>
   </footer>

@@ -23,7 +23,13 @@ a{color:inherit}
 /* header */
 .site-head{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:2px solid var(--ink);padding-top:env(safe-area-inset-top,0px)}
 .head-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding-block:14px}
+.head-left{display:flex;align-items:center;flex-wrap:wrap;gap:6px 22px}
 .brand{font:400 24px/1 var(--display);text-decoration:none}
+.head-nav{display:flex;gap:16px;font-size:14px;font-weight:600}
+.head-nav a{text-decoration:none;color:var(--muted);padding-block:4px;border-bottom:2px solid transparent}
+.head-nav a:hover{color:var(--ink);border-bottom-color:var(--turmeric)}
+.head-nav .hub{color:var(--ink)}
+.foot-hub{font-weight:600;color:var(--ink)}
 .brand span{color:var(--turmeric)}
 .search{flex:1 1 260px;max-width:420px}
 .search input{width:100%;font:inherit;font-size:15px;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}
