@@ -22,6 +22,17 @@
   "photos": 0
  },
  {
+  "id": "china",
+  "name": "China",
+  "continent": "Asia",
+  "flag": "🇨🇳",
+  "file": "data/china.json",
+  "cuisines": 30,
+  "dishes": 526,
+  "recipes": 526,
+  "photos": 0
+ },
+ {
   "id": "japan",
   "name": "Japan",
   "continent": "Asia",

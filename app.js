@@ -14,7 +14,7 @@ let countries = [];
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const dietCls = d => d.startsWith('Veg') ? 'v' : d.startsWith('Non') ? 'n' : 'e';
 const dietLbl = d => d.startsWith('Veg') ? 'Veg' : d.startsWith('Non') ? 'Non-veg' : 'Egg';
-const mins = m => m >= 360 ? 'Overnight soak' : m >= 60 ? `${Math.floor(m/60)} h${m%60 ? ' ' + m%60 + ' min' : ''}` : `${m} min`;
+const mins = m => m >= 2160 ? `${Math.round(m/1440)} days (mostly waiting)` : m >= 360 ? 'Overnight (mostly waiting)' : m >= 60 ? `${Math.floor(m/60)} h${m%60 ? ' ' + m%60 + ' min' : ''}` : `${m} min`;
 
 async function getJSON(url) {
   const r = await fetch(url);
