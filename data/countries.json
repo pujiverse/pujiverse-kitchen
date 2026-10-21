@@ -9,5 +9,16 @@
   "dishes": 1247,
   "recipes": 1247,
   "photos": 52
+ },
+ {
+  "id": "thailand",
+  "name": "Thailand",
+  "continent": "Asia",
+  "flag": "🇹🇭",
+  "file": "data/thailand.json",
+  "cuisines": 5,
+  "dishes": 204,
+  "recipes": 204,
+  "photos": 2
  }
 ]
