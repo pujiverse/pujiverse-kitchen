@@ -11,6 +11,17 @@
   "photos": 52
  },
  {
+  "id": "japan",
+  "name": "Japan",
+  "continent": "Asia",
+  "flag": "🇯🇵",
+  "file": "data/japan.json",
+  "cuisines": 10,
+  "dishes": 395,
+  "recipes": 395,
+  "photos": 0
+ },
+ {
   "id": "thailand",
   "name": "Thailand",
   "continent": "Asia",
