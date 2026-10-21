@@ -66,6 +66,17 @@
   "photos": 0
  },
  {
+  "id": "vietnam",
+  "name": "Vietnam",
+  "continent": "Asia",
+  "flag": "🇻🇳",
+  "file": "data/vietnam.json",
+  "cuisines": 9,
+  "dishes": 314,
+  "recipes": 314,
+  "photos": 0
+ },
+ {
   "id": "thailand",
   "name": "Thailand",
   "continent": "Asia",
