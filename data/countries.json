@@ -22,6 +22,17 @@
   "photos": 0
  },
  {
+  "id": "mexico",
+  "name": "Mexico",
+  "continent": "North America",
+  "flag": "🇲🇽",
+  "file": "data/mexico.json",
+  "cuisines": 13,
+  "dishes": 340,
+  "recipes": 340,
+  "photos": 0
+ },
+ {
   "id": "thailand",
   "name": "Thailand",
   "continent": "Asia",
