@@ -33,6 +33,17 @@
   "photos": 0
  },
  {
+  "id": "spain",
+  "name": "Spain",
+  "continent": "Europe",
+  "flag": "🇪🇸",
+  "file": "data/spain.json",
+  "cuisines": 13,
+  "dishes": 409,
+  "recipes": 409,
+  "photos": 0
+ },
+ {
   "id": "japan",
   "name": "Japan",
   "continent": "Asia",
