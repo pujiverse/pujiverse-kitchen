@@ -11,6 +11,17 @@
   "photos": 52
  },
  {
+  "id": "italy",
+  "name": "Italy",
+  "continent": "Europe",
+  "flag": "🇮🇹",
+  "file": "data/italy.json",
+  "cuisines": 17,
+  "dishes": 591,
+  "recipes": 591,
+  "photos": 0
+ },
+ {
   "id": "japan",
   "name": "Japan",
   "continent": "Asia",
