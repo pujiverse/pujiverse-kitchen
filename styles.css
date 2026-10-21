@@ -103,3 +103,8 @@ ol.steps li::before{content:counter(s);font:500 15px/1.55 var(--mono);color:var(
 /* footer */
 .site-foot{border-top:1px solid var(--line);padding-block:24px calc(24px + env(safe-area-inset-bottom,0px));color:var(--muted);font-size:13px}
 .site-foot p{margin:0 0 8px;max-width:80ch}
+
+/* country cards */
+.cuisine.country{justify-content:flex-start}
+.cuisine .flag{font-size:28px;line-height:1}
+.cuisine .grow{flex:1;min-width:0}

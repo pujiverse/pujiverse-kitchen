@@ -1,9 +1,11 @@
 /* Pujiverse Kitchen — tiny client-side app (no build step).
    Routes (hash-based, so it works on GitHub Pages or any folder):
-            #/                  India's cuisines, grouped by region
-            /:cuisine           dishes of a cuisine
-            /:cuisine/:dish     recipe page
-            /search?q=...       search dishes                              */
+            #/                          countries of the world
+            #/:country                  regional cuisines of a country
+            #/:country/:cuisine         dishes of a cuisine
+            #/:country/:cuisine/:dish   recipe page
+            #/search?q=...              search all dishes
+   Old India links (#/:cuisine and #/:cuisine/:dish) still work.            */
 
 const app = document.getElementById('app');
 const cache = {};          // country id -> data
@@ -38,8 +40,12 @@ function picture(d, cls = 'thumb', lazy = true) {
   return `<div class="ph">Photo coming soon</div>`;
 }
 
+const isCountry = id => countries.some(c => c.id === id);
+const cname = id => (countries.find(c => c.id === id) || {}).name || id;
+const fmt = n => Number(n).toLocaleString();
+
 function dishCard(country, d, showCuisine = false) {
-  return `<a class="card" href="#/${d.cuisine_id}/${d.id}" data-link>
+  return `<a class="card" href="#/${country}/${d.cuisine_id}/${d.id}" data-link>
     ${picture(d)}
     <div class="body">
       <div class="name">${esc(d.name)}</div>
@@ -52,13 +58,32 @@ function dishCard(country, d, showCuisine = false) {
 /* ---------- pages ---------- */
 async function pageHome() {
   setTitle('');
-  const data = await loadCountry('india');
+  const sum = k => countries.reduce((a, c) => a + (c[k] || 0), 0);
+  const conts = [...new Set(countries.map(c => c.continent))].sort();
+  app.innerHTML = `<p class="eyebrow">World cuisines · region by region</p>
+    <h1>What does the world cook?</h1>
+    <p class="lede">Pick a country to see its regional cuisines, every dish we've catalogued, and step-by-step recipes. More countries are added every week.</p>
+    <div class="stats"><div><b>${countries.length}</b>countries</div><div><b>${fmt(sum('cuisines'))}</b>regional cuisines</div>
+      <div><b>${fmt(sum('dishes'))}</b>dishes</div><div><b>${fmt(sum('recipes'))}</b>full recipes</div></div>
+    ${conts.map(ct => `<div class="region"><p class="eyebrow">${esc(ct)}</p><div class="cuisines">
+      ${countries.filter(c => c.continent === ct).map(c => `<a class="cuisine country" href="#/${c.id}" data-link>
+        <span class="flag" aria-hidden="true">${c.flag || ''}</span>
+        <span class="grow"><strong>${esc(c.name)}</strong><small>${c.cuisines} cuisines · ${fmt(c.recipes)} recipes</small></span>
+        <span class="n">${fmt(c.dishes)}</span></a>`).join('')}</div></div>`).join('')}`;
+}
+
+async function pageCountry(cid) {
+  const data = await loadCountry(cid);
+  if (!data) return pageNotFound();
+  const name = cname(cid);
   const recipes = data.dishes.filter(d => d.recipe).length;
-  app.innerHTML = `<p class="eyebrow">India · state by state</p>
-    <h1>What does each Indian state cook?</h1>
-    <p class="lede">Browse India's regional cuisines, see every dish we've catalogued, and open a dish for its ingredients and step-by-step method.</p>
-    <div class="stats"><div><b>${data.cuisines.length}</b>regional cuisines</div><div><b>${data.dishes.length.toLocaleString()}</b>dishes</div><div><b>${recipes.toLocaleString()}</b>full recipes</div></div>
-    ${cuisineGroups('india', data)}`;
+  setTitle(`${name} cuisines`);
+  app.innerHTML = `<nav class="crumbs"><a href="#/" data-link>World</a> / <span>${esc(name)}</span></nav>
+    <p class="eyebrow">${esc(name)} · region by region</p>
+    <h1>What does ${esc(name)} cook?</h1>
+    <p class="lede">Browse ${esc(name)}'s regional cuisines, see every dish we've catalogued, and open a dish for its ingredients and step-by-step method.</p>
+    <div class="stats"><div><b>${data.cuisines.length}</b>regional cuisines</div><div><b>${fmt(data.dishes.length)}</b>dishes</div><div><b>${fmt(recipes)}</b>full recipes</div></div>
+    ${cuisineGroups(cid, data)}`;
 }
 
 function cuisineGroups(country, data) {
@@ -66,7 +91,7 @@ function cuisineGroups(country, data) {
   return regions.map(r => `<div class="region"><p class="eyebrow">${esc(r)}</p><div class="cuisines">
     ${data.cuisines.filter(c => c.region === r).map(c => {
       const rec = (data.byCuisine[c.id] || []).filter(d => d.recipe).length;
-      return `<a class="cuisine" href="#/${c.id}" data-link><span><strong>${esc(c.name)}</strong>
+      return `<a class="cuisine" href="#/${country}/${c.id}" data-link><span><strong>${esc(c.name)}</strong>
         <small>${esc(c.states.join(', '))}</small>${rec ? `<br><span class="badge">${rec} recipes</span>` : ''}</span>
         <span class="n">${c.dish_count}</span></a>`;
     }).join('')}</div></div>`).join('');
@@ -82,7 +107,7 @@ async function pageCuisine(cid, cuId) {
   const courses = ['All', ...new Set(dishes.map(d => d.course))];
   const diets = ['All', 'Veg', 'Non-veg', 'Egg'];
   let course = 'All', diet = 'All';
-  app.innerHTML = `<nav class="crumbs"><a href="#/" data-link>Home</a> / <span>${esc(cu.name)}</span></nav>
+  app.innerHTML = `<nav class="crumbs"><a href="#/" data-link>World</a> / <a href="#/${cid}" data-link>${esc(countryName)}</a> / <span>${esc(cu.name)}</span></nav>
     <p class="eyebrow">${esc(cu.states.join(', '))}</p>
     <h1>${esc(cu.name)}</h1>
     <p class="lede">${dishes.length} dishes · ${dishes.filter(d => d.recipe).length} with full recipes</p>
@@ -110,12 +135,12 @@ async function pageDish(cid, cuId, dishId) {
   let credit = '';
   if (im && im.ai_generated) credit = `<span class="ai-badge">AI-generated image</span>Not a photograph of the actual dish.`;
   else if (im) credit = `Photo: ${esc(im.author)} · <a href="${esc(im.page)}" target="_blank" rel="noopener">${esc(im.license)}</a>, via Wikimedia Commons`;
-  app.innerHTML = `<nav class="crumbs"><a href="#/" data-link>Home</a> /
-      <a href="#/${d.cuisine_id}" data-link>${esc(d.cuisine)}</a> / <span>${esc(d.name)}</span></nav>
+  app.innerHTML = `<nav class="crumbs"><a href="#/" data-link>World</a> / <a href="#/${cid}" data-link>${esc(countryName)}</a> /
+      <a href="#/${cid}/${d.cuisine_id}" data-link>${esc(d.cuisine)}</a> / <span>${esc(d.name)}</span></nav>
     <div class="hero">
       <div>${picture(d, 'hero-img', false)}<div class="credit">${credit}</div></div>
       <div>
-        <p class="eyebrow">${esc(d.cuisine)}${d.states.join(', ') !== d.cuisine ? ' · ' + esc(d.states.join(', ')) : ''}</p>
+        <p class="eyebrow">${esc(d.cuisine)} · ${esc(d.states.join(', ') !== d.cuisine ? d.states.join(', ') : countryName)}</p>
         <h1>${esc(d.name)}</h1>
         <div class="tags"><span class="tag">${esc(d.course)}</span><span class="tag diet ${dietCls(d.diet)}"><i></i>${esc(d.diet)}</span></div>
         ${r ? `<div class="facts"><div><span>Serves</span>${r.serves}</div><div><span>Prep</span>${mins(r.prep_minutes)}</div>
@@ -131,22 +156,24 @@ async function pageDish(cid, cuId, dishId) {
   window.scrollTo(0, 0);
 }
 
+let searchIndex = null;
 async function pageSearch(q) {
   setTitle(`Search: ${q}`);
   document.getElementById('q').value = q;
   const term = q.trim().toLowerCase();
-  const hits = [];
-  for (const c of countries) {
-    const data = await loadCountry(c.id);
-    for (const d of data.dishes) {
-      if (d.name.toLowerCase().includes(term) || d.cuisine.toLowerCase().includes(term) ||
-          (d.recipe && d.recipe.ingredients.some(i => i.toLowerCase().includes(term)))) hits.push([c.id, d]);
-    }
-  }
-  hits.sort((a, b) => (b[1].name.toLowerCase().includes(term)) - (a[1].name.toLowerCase().includes(term)) || (!!b[1].recipe - !!a[1].recipe));
-  app.innerHTML = `<nav class="crumbs"><a href="#/" data-link>Home</a> / <span>Search</span></nav>
-    <h1>“${esc(q)}”</h1><p class="lede">${hits.length} dishes found (names, cuisines and ingredients).</p>
-    <div class="grid">${hits.slice(0, 200).map(([cid, d]) => dishCard(cid, d, true)).join('') || '<div class="empty">Nothing found. Try a shorter word.</div>'}</div>`;
+  app.innerHTML = `<p class="loading">Searching…</p>`;
+  searchIndex ||= await getJSON('data/search.json');
+  // rows: [country, cuisine_id, id, name, cuisine, course, diet letter, has recipe, thumb]
+  const hits = searchIndex.filter(r => r[3].toLowerCase().includes(term) || r[4].toLowerCase().includes(term) || cname(r[0]).toLowerCase().includes(term));
+  hits.sort((a, b) => (b[3].toLowerCase().includes(term)) - (a[3].toLowerCase().includes(term)) || b[7] - a[7]);
+  const card = r => {
+    const d = {name: r[3], cuisine: `${r[4]} · ${cname(r[0])}`, cuisine_id: r[1], id: r[2], course: r[5],
+               diet: {V: 'Vegetarian', N: 'Non-vegetarian', C: 'Contains egg'}[r[6]] || 'Vegetarian', recipe: r[7], image: r[8] ? {url: r[8]} : null};
+    return dishCard(r[0], d, true);
+  };
+  app.innerHTML = `<nav class="crumbs"><a href="#/" data-link>World</a> / <span>Search</span></nav>
+    <h1>“${esc(q)}”</h1><p class="lede">${fmt(hits.length)} dishes found${hits.length > 300 ? ' (showing the first 300)' : ''}.</p>
+    <div class="grid">${hits.slice(0, 300).map(card).join('') || '<div class="empty">Nothing found. Try a shorter word.</div>'}</div>`;
 }
 
 function pageNotFound() {
@@ -163,9 +190,13 @@ async function route() {
   try {
     if (parts[0] === 'search') return await pageSearch(url.searchParams.get('q') || '');
     if (parts.length === 0) return await pageHome();
-    if (parts[0] === 'india') return go('/' + parts.slice(1).join('/'));   // old /india/... links
-    if (parts.length === 1) return await pageCuisine('india', parts[0]);
-    if (parts.length === 2) return await pageDish('india', parts[0], parts[1]);
+    if (isCountry(parts[0])) {
+      if (parts.length === 1) return await pageCountry(parts[0]);
+      if (parts.length === 2) return await pageCuisine(parts[0], parts[1]);
+      if (parts.length === 3) return await pageDish(parts[0], parts[1], parts[2]);
+    } else if (parts.length <= 2) {                      // old India links: #/:cuisine[/:dish]
+      return go('#/india/' + parts.join('/'));
+    }
     pageNotFound();
   } catch (err) {
     app.innerHTML = `<h1>Something went wrong</h1><p class="lede">${esc(err.message)}. Refresh the page to try again.</p>`;

@@ -1,7 +1,13 @@
 [
-  {
-    "id": "india",
-    "name": "India",
-    "file": "data/india.json"
-  }
+ {
+  "id": "india",
+  "name": "India",
+  "continent": "Asia",
+  "flag": "🇮🇳",
+  "file": "data/india.json",
+  "cuisines": 46,
+  "dishes": 1247,
+  "recipes": 1247,
+  "photos": 52
+ }
 ]
