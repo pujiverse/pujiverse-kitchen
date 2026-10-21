@@ -77,6 +77,17 @@
   "photos": 0
  },
  {
+  "id": "south-korea",
+  "name": "South Korea",
+  "continent": "Asia",
+  "flag": "🇰🇷",
+  "file": "data/south-korea.json",
+  "cuisines": 7,
+  "dishes": 285,
+  "recipes": 285,
+  "photos": 0
+ },
+ {
   "id": "thailand",
   "name": "Thailand",
   "continent": "Asia",
