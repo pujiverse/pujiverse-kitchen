@@ -8,7 +8,18 @@
   "cuisines": 46,
   "dishes": 1247,
   "recipes": 1247,
-  "photos": 52
+  "photos": 1247
+ },
+ {
+  "id": "united-states",
+  "name": "United States",
+  "continent": "North America",
+  "flag": "🇺🇸",
+  "file": "data/united-states.json",
+  "cuisines": 19,
+  "dishes": 654,
+  "recipes": 654,
+  "photos": 0
  },
  {
   "id": "italy",
@@ -19,7 +30,7 @@
   "cuisines": 17,
   "dishes": 591,
   "recipes": 591,
-  "photos": 0
+  "photos": 591
  },
  {
   "id": "china",
@@ -30,6 +41,17 @@
   "cuisines": 30,
   "dishes": 526,
   "recipes": 526,
+  "photos": 526
+ },
+ {
+  "id": "france",
+  "name": "France",
+  "continent": "Europe",
+  "flag": "🇫🇷",
+  "file": "data/france.json",
+  "cuisines": 17,
+  "dishes": 452,
+  "recipes": 452,
   "photos": 0
  },
  {
@@ -52,7 +74,7 @@
   "cuisines": 10,
   "dishes": 395,
   "recipes": 395,
-  "photos": 0
+  "photos": 395
  },
  {
   "id": "mexico",
@@ -63,7 +85,7 @@
   "cuisines": 13,
   "dishes": 340,
   "recipes": 340,
-  "photos": 0
+  "photos": 340
  },
  {
   "id": "vietnam",
@@ -96,6 +118,6 @@
   "cuisines": 5,
   "dishes": 204,
   "recipes": 204,
-  "photos": 2
+  "photos": 204
  }
 ]
