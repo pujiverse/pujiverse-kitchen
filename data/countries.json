@@ -19,7 +19,7 @@
   "cuisines": 19,
   "dishes": 654,
   "recipes": 654,
-  "photos": 0
+  "photos": 654
  },
  {
   "id": "italy",
@@ -52,7 +52,7 @@
   "cuisines": 17,
   "dishes": 452,
   "recipes": 452,
-  "photos": 0
+  "photos": 452
  },
  {
   "id": "spain",
@@ -63,7 +63,7 @@
   "cuisines": 13,
   "dishes": 409,
   "recipes": 409,
-  "photos": 0
+  "photos": 409
  },
  {
   "id": "japan",
@@ -96,7 +96,7 @@
   "cuisines": 9,
   "dishes": 314,
   "recipes": 314,
-  "photos": 0
+  "photos": 314
  },
  {
   "id": "south-korea",
@@ -107,7 +107,7 @@
   "cuisines": 7,
   "dishes": 285,
   "recipes": 285,
-  "photos": 0
+  "photos": 285
  },
  {
   "id": "thailand",
